@@ -1,0 +1,16 @@
+<view wx:for="{{timelines}}" bindtouchstart="touchStart" bindtouchend="touchEnd">
+
+    <view id='{{item.id}}' style="height:100px" bindtap='tapTimeline'>
+        <text>{{item.description}}</text>
+    </view>
+
+    <view animation="{{animationData}}" style="width:{{menuWidth}}px; height:100%; position:fixed; top:0; left:{{menuLeft}}px; background-color:black">
+        <view wx:for="{{courses}}">
+            <view id="{{item.id}}" bindtap="tapCourse">
+                <text style="color:white">{{item.description}}</text>
+            </view>
+        </view>
+    </view>
+
+</view>
+

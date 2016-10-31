@@ -1,0 +1,12 @@
+<form bindsubmit="formSubmit" bindreset="formReset">
+    <view class="section">
+        <input name="username_input" type="text" placeholder="用户名" />
+    </view>
+    <view class="section">
+        <input name="password_input" type="text" password placeholder="密码" />
+    </view>
+    <view class="section">
+        <text>{{hint}}</text>
+        <button type="primary" formType="submit">绑定</button>
+    </view>
+</form>
