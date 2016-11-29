@@ -1,9 +1,7 @@
 {
   "pages":[
     "pages/timeline/timeline",
-    "pages/signin/signin",
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/signin/signin"
   ],
   "window":{
     "backgroundTextStyle":"light",

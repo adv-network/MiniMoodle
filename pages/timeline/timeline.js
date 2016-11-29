@@ -1,5 +1,4 @@
 var user = require('../../utils/user.js')
-var tm = require('../../data/timeline_model.js')
 import {Drawer} from '../../utils/drawer/drawer'
 
 var menuWidth = 250
