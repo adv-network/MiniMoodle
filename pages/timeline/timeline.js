@@ -1,8 +1,9 @@
-var user = require('../../utils/user.js')
+import User from '../../utils/user'
 import {Drawer} from '../../utils/drawer/drawer'
 
 var menuWidth = 250
 var drawer = new Drawer(menuWidth)
+var page = null
 
 Page({
     data:{
@@ -10,9 +11,12 @@ Page({
         menuWidth: menuWidth    
     },
     onLoad:function(){
-        if(user.isAuthorized()){
-            this.setData({
-                timelines: getData()
+        page = this
+
+        if(User.sharedInstance().isAuthorized()){
+            // get courses
+            User.sharedInstance().getCourses(function(v){
+                page.setData({'courses': v})
             })
         } else {
             wx.redirectTo({
@@ -23,64 +27,37 @@ Page({
     tapTimeline:function(e){
         console.log(e.currentTarget.id)
     },
+    tapCourse:function(e) {
+        wx.showToast({
+            title: '请稍等',
+            icon: 'loading',
+            duration: 10000
+        })
+        let courseid = e.currentTarget.id
+        User.sharedInstance().getCourseContent(courseid, function(v){
+            wx.hideToast()
+            page.setData(Object.assign({
+                'notifications': v.notifications,
+                'assignments': v.assignments,
+            }, drawer.close()))
+        })
+
+    },
+    tapLogout:function(e){
+        User.sharedInstance().logout()
+        wx.redirectTo({
+          url: '../signin/signin',
+          success: function(res){
+            // success
+          },
+          fail: function() {
+            // fail
+          },
+          complete: function() {
+            // complete
+          }
+        })
+    },
     touchStart:drawer.touchStart,
     touchEnd:drawer.touchEnd
 })
-
-function getData(){
-    return [
-        {
-            id: '1',
-            description: '1'
-        },
-        {
-            id: '2',
-            description: '1'
-        },
-        {
-            id: '3',
-            description: '1'
-        },
-        {
-            id: '4',
-            description: '1'
-        },
-        {
-            id: '5',
-            description: '1'
-        },
-        {
-            id: '6',
-            description: '1'
-        },
-        {
-            id: '7',
-            description: '1'
-        },
-        {
-            id: '8',
-            description: '1'
-        },
-        {
-            id: '9',
-            description: '1'
-        },
-        {
-            id: '10',
-            description: '1'
-        },
-    ]
-}
-
-function getCourses(){
-    return [
-            {
-                id: '1',
-            description:'A'
-            },
-            {
-                id: '2',
-            description:'B'
-            }
-        ]
-}

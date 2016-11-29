@@ -2,12 +2,13 @@
  * wxml settings:
  *   drawer's style: (position: fixed; left:{{menuLeft}})
  *   drawer's animation: {{animationData}}
- *   drawer's parent should bind touchStart, touchEnd
+ *   should bind touchStart, touchEnd
  */
 
-var kUpdatePeriod = 100
-var kAnimationDuration = 400
-var kSwipeDuration = 300
+let kUpdatePeriod = 100
+let kAnimationDuration = 400
+let kSwipeDuration = 500
+let kXDiff = 100
 
 export function Drawer(drawerWidth){
     this.width = drawerWidth
@@ -17,7 +18,7 @@ export function Drawer(drawerWidth){
     var that = this
     var menuLeft = -this.width
     var startX = 0
-    var endX = 0
+    var endX = -drawerWidth
     var lastUpdateTime = 0
     var startTime = 0
 
@@ -44,7 +45,7 @@ export function Drawer(drawerWidth){
 
         if(e.timeStamp - startTime < kSwipeDuration){
             var diffX = e.changedTouches[0].pageX - startX
-            if(diffX > 0 && !that.isOpen){
+            if(diffX > kXDiff && !that.isOpen){
                 this.setData(that.open())
             } else if (diffX < 0 && that.isOpen) {
                 this.setData(that.close())
