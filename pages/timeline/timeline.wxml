@@ -1,16 +1,32 @@
-<view wx:for="{{timelines}}" bindtouchstart="touchStart" bindtouchend="touchEnd">
+<view bindtouchstart="touchStart" bindtouchend="touchEnd" style="height:100%;width:100%;position:fixed;">
+</view>
+<view>
+    <text class="header">通知</text>
+</view>
+<view wx:for="{{notifications}}" wx:key="timeline">
 
-    <view id='{{item.id}}' style="height:100px" bindtap='tapTimeline'>
-        <text>{{item.description}}</text>
-    </view>
-
-    <view animation="{{animationData}}" style="width:{{menuWidth}}px; height:100%; position:fixed; top:0; left:{{menuLeft}}px; background-color:black">
-        <view wx:for="{{courses}}">
-            <view id="{{item.id}}" bindtap="tapCourse">
-                <text style="color:white">{{item.description}}</text>
-            </view>
-        </view>
+    <view id='{{item.id}}' class="item" bindtap='tapTimeline'>
+        <text>{{item.name}}</text>
     </view>
 
 </view>
 
+<view>
+    <text class="header">作业</text>
+</view>
+<view wx:for="{{assignments}}" wx:key="timeline">
+
+    <view id='{{item.id}}' class="item" bindtap='tapTimeline'>
+        <text>{{item.name}}</text>
+    </view>
+
+</view>
+
+<view id="left-menu" animation="{{animationData}}" style="width:{{menuWidth}}px; height:100%; position:fixed; top:0; left:{{menuLeft}}px;">
+    <view wx:for="{{courses}}" wx:key="course">
+        <view class="course" id="{{item.id}}" bindtap="tapCourse">
+            <text style="color:white">{{item.name}}</text>
+        </view>
+    </view>
+    <button type="warn" bindtap="tapLogout">解除绑定</button>
+</view>

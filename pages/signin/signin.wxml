@@ -6,7 +6,7 @@
         <input name="password_input" type="text" password placeholder="密码" />
     </view>
     <view class="section">
-        <text>{{hint}}</text>
+        <text id="hint-text">{{hint}}</text>
         <button type="primary" formType="submit">绑定</button>
     </view>
 </form>
