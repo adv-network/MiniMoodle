@@ -27,10 +27,30 @@ export default class Moodle {
      this.invokeService('core_course_get_contents', data => {
        let content = { assignments: [], notifications: [], forumid: null }
        content.forumid = data[0].modules[0].id
-       data[3].modules.forEach((a) => { content.assignments.push({ id: a.id, name: a.name }) })
-       data[1].modules.forEach((n) => { content.notifications.push({ id: n.id, name: n.name }) })
+       data[3].modules.forEach(a => { content.assignments.push({ id: a.id, name: a.name }) })
+       data[1].modules.forEach(n => { content.notifications.push({ id: n.id, name: n.name }) })
        callback(content)
      }, {data: { courseid: courseid }})
+  }
+
+  getAssignments(callback) {
+    this.invokeService('mod_assign_get_assignments', data => {
+      let assignments = []
+      data.courses.forEach(c => {
+        c.assignments.forEach(a => {
+          assignments.push({
+            id: a.id,
+            courseid: a.course,
+            start: new Date(a.allowsubmissionsfromdate * 1000),
+            due: new Date(a.duedate * 1000),
+            title: a.name,
+            content: a.intro
+          })
+        })
+      });
+      assignments.sort((a, b) => { return b.id - a.id })
+      callback(assignments)
+    })
   }
 
   getDiscussions(forumid, callback) {
