@@ -1,6 +1,6 @@
 import Moodle from 'moodle'
 
-let baseURL = 'https://172.17.215.201'
+let baseURL = 'https://qcloud.robinhan.xyz'
 var sharedInstance = null
 
 export default class User {
@@ -60,6 +60,12 @@ export default class User {
     getCourseContent(courseid, callback) {
         this.moodle.getCourseContent(courseid, function(v){
             callback(v)
+        })
+    }
+
+    getDiscussions(forumid, callback) {
+        this.moodle.getDiscussions(forumid, function(v){
+            callback(v.map((u) => {return {id: u.id, name: u.subject}}))
         })
     }
 }

@@ -2,7 +2,7 @@ import User from '../../utils/user'
 import {Drawer} from '../../utils/drawer/drawer'
 
 var menuWidth = 250
-var drawer = new Drawer(menuWidth)
+var drawer = new Drawer(menuWidth, 1)
 var page = null
 
 Page({
