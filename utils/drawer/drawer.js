@@ -10,9 +10,9 @@ let kAnimationDuration = 400
 let kSwipeDuration = 500
 let kXDiff = 100
 
-export function Drawer(drawerWidth){
+export function Drawer(drawerWidth, direction){
     this.width = drawerWidth
-
+    this.direction = direction / Math.abs(direction) // +1, right; -1, left
     this.isOpen = false
 
     var that = this
@@ -44,7 +44,7 @@ export function Drawer(drawerWidth){
         // this.setData(data)
 
         if(e.timeStamp - startTime < kSwipeDuration){
-            var diffX = e.changedTouches[0].pageX - startX
+            var diffX = (e.changedTouches[0].pageX - startX) * that.direction
             if(diffX > kXDiff && !that.isOpen){
                 this.setData(that.open())
             } else if (diffX < 0 && that.isOpen) {
@@ -72,7 +72,7 @@ export function Drawer(drawerWidth){
     // }
 
     this.open = function(){
-        menuAnimation.translate(-endX, 0).step()
+        menuAnimation.translate(-endX * that.direction, 0).step()
         menuLeft = 0
         endX = 0
         that.isOpen = true
@@ -82,7 +82,7 @@ export function Drawer(drawerWidth){
     }
 
     this.close = function(){
-        menuAnimation.translate(-endX-that.width, 0).step()
+        menuAnimation.translate((-endX-that.width) * that.direction, 0).step()
         menuLeft = -that.width
         endX = -that.width
         that.isOpen = false
