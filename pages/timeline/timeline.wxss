@@ -24,3 +24,24 @@ view#discussion-view {
     background-color: grey;
     overflow:hidden;
 }
+
+.overview-header {
+    padding: 5px;
+}
+
+.item {
+    padding: 0px 0px 0px 5px;
+}
+
+#left-menu button{
+    width: 90%;
+    margin: 5px 5px 0px 5px;
+}
+
+.course {
+    padding: 0px 0px 0px 5px;
+}
+
+#course-title{
+    padding: 5px 0px 0px 5px;
+}

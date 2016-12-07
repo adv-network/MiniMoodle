@@ -1,3 +1,12 @@
 #hint-text{
     color: red;
+    bottom: 100px;
+}
+
+.section {
+    position: relative;
+    top: 180px;
+    left: 10%;
+    width: 80%;
+    margin: 10px 0px 10px;
 }
