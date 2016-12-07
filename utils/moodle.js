@@ -1,6 +1,8 @@
 import request from './requests'
 
 export default class Moodle {
+  // const DEFAULT_METHOD = 'POST'
+  // const DEFAULT_HEADER = { 'content-type': 'application/x-www-form-urlencoded' }
 
   constructor(baseURL, username, password) {
     this.baseURL = baseURL
@@ -12,65 +14,77 @@ export default class Moodle {
   }
 
   getUserInfo(callback) {
-    this.invokeService('core_webservice_get_site_info', data => {
-      callback({ id: data.userid, name: data.fullname })
+    this.invokeService({
+      service: 'core_webservice_get_site_info',
+      success: data => { callback({ id: data.userid, name: data.fullname }) }
     })
   }
 
   getUserCourses(userid, callback) {
-    this.checkTokenAndAction(() => {
-      this.invokeService('core_enrol_get_users_courses', data => {
+    this.invokeService({
+      service: 'core_enrol_get_users_courses',
+      success: data => {
         callback(data.map(c => { return { name: c.fullname, id: c.id } }))
-      }, { data: { userid: userid } })
+      },
+      data: { userid: userid }
     })
   }
 
   getCourseContent(courseid, callback) {
-     this.invokeService('core_course_get_contents', data => {
+    this.invokeService({
+      service: 'core_course_get_contents',
+      data: { courseid: courseid },
+      success: data => {
        let content = { assignments: [], notifications: [], forumid: null, courseid: courseid }
        content.forumid = data[0].modules[0].id
        data[3].modules.forEach(a => { content.assignments.push({ id: a.id, title: a.name }) })
        data[1].modules.forEach(n => { content.notifications.push({ id: n.id, name: n.name }) })
        callback(content)
-     }, {data: { courseid: courseid }})
+      }
+    })
   }
 
   getAssignments(callback) {
-    this.invokeService('mod_assign_get_assignments', data => {
-      let assignments = []
-      data.courses.forEach(c => {
-        c.assignments.forEach(a => {
-          assignments.push({
-            id: a.id,
-            courseid: a.course,
-            start: new Date(a.allowsubmissionsfromdate * 1000),
-            due: new Date(a.duedate * 1000),
-            title: a.name,
-            content: a.intro
+    this.invokeService({
+      service: 'mod_assign_get_assignments',
+      success: data => {
+        let assignments = [].concat(...data.courses.map(c => {
+          return c.assignments.map(a => {
+            return {
+              id: a.id,
+              courseid: a.course,
+              start: new Date(a.allowsubmissionsfromdate * 1000),
+              due: new Date(a.duedate * 1000),
+              title: a.name,
+              content: a.intro
+            }
           })
-        })
-      });
-      assignments.sort((a, b) => { return b.id - a.id })
-      callback(assignments)
+        })).sort((a, b) => { return b.id - a.id })
+        callback(assignments)
+      }
     })
   }
 
   getDiscussions(forumid, callback, optionData) {
-    this.invokeService('mod_forum_get_forum_discussions_paginated', data => {
-      if ('exception' in data) data = { discussions: [] }
-      callback(data.discussions.map(v => {
-        if (!(optionData instanceof Object)) optionData = {}
-        let discussion = optionData
-        return Object.assign(optionData, {
-          id: v.discussion,
-          subject: v.subject,
-          message: v.message,
-          publisher: v.userfullname,
-          createdTime: new Date(v.created * 1000),
-          modifiedTime: new Date(v.modified * 1000)
-        })
-      }))
-    }, { data: { forumid: forumid } })
+    this.invokeService({
+      service: 'mod_forum_get_forum_discussions_paginated',
+      data: { forumid: forumid },
+      success: data => {
+        if ('exception' in data) data = { discussions: [] }
+        callback(data.discussions.map(v => {
+          if (!(optionData instanceof Object)) optionData = {}
+          let discussion = optionData
+          return Object.assign(optionData, {
+            id: v.discussion,
+            subject: v.subject,
+            message: v.message,
+            publisher: v.userfullname,
+            createdTime: new Date(v.created * 1000),
+            modifiedTime: new Date(v.modified * 1000)
+          })
+        }))
+      }
+    })
   }
 
   checkTokenAndAction(callback) {
@@ -81,20 +95,17 @@ export default class Moodle {
     }
   }
 
-  invokeService(service, callback, options={}) {
+  invokeService(obj) {
     this.checkTokenAndAction(() => {
-      let url = `${this.baseURL}/webservice/rest/server.php?wstoken=${this.token}&wsfunction=${service}&moodlewsrestformat=json&moodlewssettingfilter=true&moodlewssettingfileurl=true`
+      let url = `${this.baseURL}/webservice/rest/server.php?wstoken=${this.token}&wsfunction=${obj.service}&moodlewsrestformat=json&moodlewssettingfilter=true&moodlewssettingfileurl=true`
       let req = {
-        url: url, method: 'POST', header: { 'content-type': 'application/x-www-form-urlencoded' },
-        success: resp => {
-          callback(resp.data)
-        }
+        url: url,
+        method: ('method' in obj) ? obj.method: Moodle.DEFAULT_METHOD,
+        header: ('header' in obj) ? obj.header: Moodle.DEFAULT_HEADER,
+        fail: obj.fail, complete: obj.complete, data: obj.data
       }
-
-      for (let option in options) {
-        req[option] = options[option]
-      }
-
+      let success = obj.success
+      req.success = resp => { return success(resp.data) }
       request(req)
     })
   }
