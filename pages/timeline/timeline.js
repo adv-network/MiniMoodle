@@ -1,8 +1,34 @@
 import User from '../../utils/user'
 import {Drawer} from '../../utils/drawer/drawer'
 import {initReadStatus, MsgType, readMsg, ifMsgRead, initArchive, archiveMsg, ifMsgArchived, unreadMsg, unArchiveMsg} from '../../utils/util'
+import Global from '../../model/global'
 
-
+var timelineData = {
+    assignment: {
+        open : false,
+        content: [],
+        description: "作业",
+        str: "assignment",
+        badge: 0,
+        msgType: MsgType.ASSIGNMENT
+    },
+    notification: {
+        open: false,
+        content: [],
+        description: "通知",
+        str: "notification",
+        badge: 0,
+        msgType: MsgType.NOTIFY
+    },
+    discussion: {
+        open: false,
+        content: [],
+        description: "讨论",
+        str: "discussion",
+        badge: 0,
+        msgType: MsgType.DISCUSS
+    }
+}
 
 let itemMenu = ['已读', '归档']
 let menuWidth = 250
@@ -10,45 +36,29 @@ let itemHeight = 50
 
 var drawer = new Drawer(menuWidth, 1)
 var page = null
+var currentMsyType = ''
+var currentItemID = 0
 
-var data = {
-    assignment: {
-        open : false,
-        content: [],
-        description: "作业",
-        str: "assignment",
-        badge: 0
-    },
-    notification: {
-        open: false,
-        content: [],
-        description: "通知",
-        str: "notification",
-        badge: 0
-    },
-    discussion: {
-        open: false,
-        content: [],
-        description: "讨论",
-        str: "discussion",
-        badge: 0
-    }
-}
+var itemMenuActionSheet = function(msgType, id) {
+    var read = ifMsgRead(msgType, id)
+    var archived = ifMsgArchived(msgType, id)
 
-var itemMenuActionSheet = {
-            itemList: itemMenu,
-            success: function(res) {
-                if (!res.cancel) {
-                    if (res.tapIndex == 0) {
-                        // 已读
+    return {
+        itemList: [read ? '标记为未读' : '标记成已读', archived ? '取消归档' : '归档'],
+        success: function(res) {
+            if (!res.cancel) {
+                if (res.tapIndex == 0) {
+                    // 已读
 
-                    } else if(res.tapIndex == 1) {
-                        // 归档
+                } else if(res.tapIndex == 1) {
+                    // 归档
 
-                    }
                 }
             }
         }
+    }
+}
+
 var blockAnimation = wx.createAnimation({
             transformOrigin: "50% 50%",
             duration: 500,
@@ -78,7 +88,9 @@ Page({
     },
     tapTimeline:function(e){
         if(!drawer.isOpen) {
-            console.log(e.currentTarget.id)
+            var idSplit = e.currentTarget.id.split('-')
+            currentItemID = idSplit[1]
+            currentMsyType = idSplit[0]
             wx.showActionSheet(itemMenuActionSheet)
         }
     },
@@ -139,19 +151,19 @@ var displayLoading = function(){
 }
 
 var triggerBlock = function(name) {
-    var animationHeight = data[name].open ? itemHeight : (data[name].content.length + 1) * itemHeight
+    var animationHeight = timelineData[name].open ? itemHeight : (timelineData[name].content.length + 1) * itemHeight
     var animationObj = {}
     animationObj[name + "Animation"] = blockAnimation.height(animationHeight).step().export()
-    data[name].open = !data[name].open
+    timelineData[name].open = !timelineData[name].open
     page.setData(animationObj)
 }
 
 var resetBlocks = function() {
     var refreshData = {}
-    for (var d in data) {
-        data[d].open = false
+    for (var d in timelineData) {
+        timelineData[d].open = false
         var animationObj = {}
-        animationObj[data[d].str + "Animation"] = blockAnimation.height(itemHeight).step().export()
+        animationObj[timelineData[d].str + "Animation"] = blockAnimation.height(itemHeight).step().export()
         refreshData = Object.assign(refreshData, animationObj)
     }
     return refreshData
@@ -160,9 +172,10 @@ var resetBlocks = function() {
 var fetchAllData = function() {
     User.sharedInstance().getBundle(function(v){
         wx.hideToast()
-        data.assignment.content = v.assignments
-        data.discussion.content = v.discussions
-        data.notification.content = v.notifications
+
+        timelineData.assignment.content = v.assignments
+        timelineData.discussion.content = v.discussions
+        timelineData.notification.content = v.notifications
 
         // init read status 
         initReadStatus(MsgType.NOTIFY, v.notifications)
@@ -172,22 +185,57 @@ var fetchAllData = function() {
         initArchive(MsgType.ASSIGNMENT, v.assignments)
         initArchive(MsgType.DISCUSS, v.discussions)  
 
-        page.setData(Object.assign({courses: v.courses}, data))
+        filterData()
+        page.setData(Object.assign({courses: v.courses}, timelineData))
     })
 }
 
 var refreshByCourse = function(courseid) {
     User.sharedInstance().getCourseContent(courseid, function(v){   
 
-        data.assignment.content = v.assignments
-        data.notification.content = v.notifications
+        timelineData.assignment.content = v.assignments
+        timelineData.notification.content = v.notifications
 
         User.sharedInstance().getDiscussions(v.forumid, function(v2){
             wx.hideToast()
-            data.discussion.content = v2
+            timelineData.discussion.content = v2
 
-            page.setData(Object.assign(data, blockAnimations, drawer.close()))
             var blockAnimations = resetBlocks()
+            filterReadData()
+            page.setData(Object.assign(timelineData, blockAnimations, drawer.close()))
         })
     })
+}
+
+var filterData = function() {
+    Global.archives = []
+    for (var k in timelineData) {
+        for (var i = 0; i < timelineData[k].content.length; i++) {
+            var tmp = timelineData[k].content[i]
+
+            if (ifMsgArchived(timelineData[k].msgType, tmp.id)) {
+                console.log('archive')
+                Global.archives.push(tmp)
+                timelineData[k].content.splice(i, 1)
+            }
+        }
+    }
+    filterReadData()
+}
+
+var filterReadData = function() {
+    for (var k in timelineData) {
+        timelineData[k].badge = 0
+
+        for (var i = 0; i < timelineData[k].content.length; i++) {
+            var tmp = timelineData[k].content[i]
+
+            if(ifMsgRead(timelineData[k].msgType, tmp.id)) {
+                tmp.read = true
+            } else {
+                tmp.read = false
+                timelineData[k].badge++
+            }
+        }
+    }
 }
