@@ -7,6 +7,8 @@
     </view>
     <view class="section">
         <text id="hint-text">{{hint}}</text>
+    </view>
+    <view class="section">
         <button type="primary" formType="submit">绑定</button>
     </view>
 </form>
