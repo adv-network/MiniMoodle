@@ -1,7 +1,8 @@
 {
   "pages":[
     "pages/timeline/timeline",
-    "pages/signin/signin"
+    "pages/signin/signin",
+    "pages/archive/archive"
   ],
   "window":{
     "backgroundTextStyle":"light",

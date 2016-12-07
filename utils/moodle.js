@@ -1,3 +1,5 @@
+import request from './requests'
+
 export default class Moodle {
 
   constructor(baseURL, username, password) {
@@ -18,16 +20,16 @@ export default class Moodle {
   getUserCourses(userid, callback) {
     this.checkTokenAndAction(() => {
       this.invokeService('core_enrol_get_users_courses', data => {
-        callback(data.map((course) => { return { name: course.fullname, id: course.id } }))
+        callback(data.map(c => { return { name: c.fullname, id: c.id } }))
       }, { data: { userid: userid } })
     })
   }
 
   getCourseContent(courseid, callback) {
      this.invokeService('core_course_get_contents', data => {
-       let content = { assignments: [], notifications: [], forumid: null }
+       let content = { assignments: [], notifications: [], forumid: null, courseid: courseid }
        content.forumid = data[0].modules[0].id
-       data[3].modules.forEach(a => { content.assignments.push({ id: a.id, name: a.name }) })
+       data[3].modules.forEach(a => { content.assignments.push({ id: a.id, title: a.name }) })
        data[1].modules.forEach(n => { content.notifications.push({ id: n.id, name: n.name }) })
        callback(content)
      }, {data: { courseid: courseid }})
@@ -53,17 +55,20 @@ export default class Moodle {
     })
   }
 
-  getDiscussions(forumid, callback) {
+  getDiscussions(forumid, callback, optionData) {
     this.invokeService('mod_forum_get_forum_discussions_paginated', data => {
-      callback(data.discussions.map((v) => {
-        return {
+      if ('exception' in data) data = { discussions: [] }
+      callback(data.discussions.map(v => {
+        if (!(optionData instanceof Object)) optionData = {}
+        let discussion = optionData
+        return Object.assign(optionData, {
           id: v.discussion,
           subject: v.subject,
           message: v.message,
           publisher: v.userfullname,
           createdTime: new Date(v.created * 1000),
           modifiedTime: new Date(v.modified * 1000)
-        }
+        })
       }))
     }, { data: { forumid: forumid } })
   }
@@ -90,7 +95,7 @@ export default class Moodle {
         req[option] = options[option]
       }
 
-      wx.request(req)
+      request(req)
     })
   }
 
@@ -114,7 +119,7 @@ Moodle.prototype.getToken = function() {
     status = 'INITIALIZING'
     callbacks.push(callback)
     let url = `${this.baseURL}/login/token.php?username=${this.username}&password=${this.password}&service=moodle_mobile_app`
-    wx.request({
+    request({
       url: url, method: 'POST',
       success: resp => {
         this.token = resp.data.token

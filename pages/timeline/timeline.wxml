@@ -1,32 +1,55 @@
-<view bindtouchstart="touchStart" bindtouchend="touchEnd" style="height:100%;width:100%;position:fixed;">
-</view>
-<view>
-    <text class="header">通知</text>
-</view>
-<view wx:for="{{notifications}}" wx:key="timeline">
+<view bindtouchstart="touchStart" bindtouchend="touchEnd" style="width:100%; min-height:600px;">
 
-    <view id='{{item.id}}' class="item" bindtap='tapTimeline'>
-        <text>{{item.name}}</text>
+    <view id="notification-view" animation="{{notificationAnimation}}" style="height:{{blockHeight}}px;">
+        <view class="header-view" id="notification-header-view" bindtap="tapHeader" style="height:{{itemHeight}}px;">
+            <text class="header">{{notification.description}}({{notification.badge}})</text>
+        </view>
+        <view wx:for="{{notification.content}}" wx:key="timeline">
+
+            <view id='{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+                <text>{{item.name}}</text>
+            </view>
+
+        </view>
     </view>
 
-</view>
+    <view id="assignment-view" animation="{{assignmentAnimation}}" style="height:{{blockHeight}}px;">
+        <view class="header-view" id="assignment-header-view" bindtap="tapHeader" style="height:{{itemHeight}}px;">
+            <text class="header">{{assignment.description}}({{assignment.badge}})</text>
+        </view>
+        <view wx:for="{{assignment.content}}" wx:key="timeline">
 
-<view>
-    <text class="header">作业</text>
-</view>
-<view wx:for="{{assignments}}" wx:key="timeline">
+            <view id='{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+                <text>{{item.title}}</text>
+            </view>
 
-    <view id='{{item.id}}' class="item" bindtap='tapTimeline'>
-        <text>{{item.name}}</text>
+        </view>
     </view>
 
+    <view id="discussion-view" animation="{{discussionAnimation}}" style="height:{{blockHeight}}px;">
+        <view class="header-view" id="discussion-header-view" bindtap="tapHeader" style="height:{{itemHeight}}px;">
+            <text class="header">{{discussion.description}}({{discussion.badge}})</text>
+        </view>
+        <view wx:for="{{discussion.content}}" wx:key="timeline">
+
+            <view id='{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+                <text>{{item.subject}}</text>
+            </view>
+
+        </view>
+    </view>
 </view>
 
+<!--menu-->
 <view id="left-menu" animation="{{animationData}}" style="width:{{menuWidth}}px; height:100%; position:fixed; top:0; left:{{menuLeft}}px;">
+    <view class="course" bindtap="tapAllCourse">
+        <text style="color:white">全部</text>
+    </view>
     <view wx:for="{{courses}}" wx:key="course">
         <view class="course" id="{{item.id}}" bindtap="tapCourse">
             <text style="color:white">{{item.name}}</text>
         </view>
     </view>
+    <button type="default" bindtap="tapFileContent">归档内容</button>
     <button type="warn" bindtap="tapLogout">解除绑定</button>
 </view>
