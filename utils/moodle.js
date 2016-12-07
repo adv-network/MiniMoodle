@@ -29,7 +29,7 @@ export default class Moodle {
      this.invokeService('core_course_get_contents', data => {
        let content = { assignments: [], notifications: [], forumid: null, courseid: courseid }
        content.forumid = data[0].modules[0].id
-       data[3].modules.forEach(a => { content.assignments.push({ id: a.id, name: a.name }) })
+       data[3].modules.forEach(a => { content.assignments.push({ id: a.id, title: a.name }) })
        data[1].modules.forEach(n => { content.notifications.push({ id: n.id, name: n.name }) })
        callback(content)
      }, {data: { courseid: courseid }})

@@ -6,16 +6,8 @@ view.course{
     height: 50px;
 }
 
-view.header-view {
-    height: 50px;
-}
-
 text.header {
     color: blue;
-}
-
-view.item {
-    height: 50px;
 }
 
 view#notification-view {

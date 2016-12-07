@@ -66,7 +66,7 @@ export default class User {
 
     getDiscussions(forumid, callback) {
         this.moodle.getDiscussions(forumid, function(v){
-            callback(v.map((u) => {return {id: u.id, name: u.subject}}))
+            callback(v.map((u) => {return {id: u.id, subject: u.subject}}))
         })
     }
 

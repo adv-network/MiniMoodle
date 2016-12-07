@@ -16,19 +16,22 @@ var data = {
         open : false,
         content: [],
         description: "作业",
-        str: "assignment"
+        str: "assignment",
+        badge: 0
     },
     notification: {
         open: false,
         content: [],
         description: "通知",
-        str: "notification"
+        str: "notification",
+        badge: 0
     },
     discussion: {
         open: false,
         content: [],
         description: "讨论",
-        str: "discussion"
+        str: "discussion",
+        badge: 0
     }
 }
 
@@ -58,16 +61,15 @@ Page({
     data:{
         menuLeft: -menuWidth,
         menuWidth: menuWidth,
-        blockHeight:itemHeight
+        blockHeight: itemHeight,
+        itemHeight: itemHeight
     },
     onLoad:function(){
         page = this
 
         if(User.sharedInstance().isAuthorized()){
-            // get courses
-            User.sharedInstance().getCourses(function(v){
-                page.setData({'courses': v})
-            })
+            displayLoading()
+            fetchAllData()
         } else {
             wx.redirectTo({
               url: '../signin/signin',
@@ -80,40 +82,14 @@ Page({
             wx.showActionSheet(itemMenuActionSheet)
         }
     },
+    tapAllCourse:function(e) {
+        // displayLoading()
+        // fetchAllData()
+    },
     tapCourse:function(e) {
-        wx.showToast({
-            title: '请稍等',
-            icon: 'loading',
-            duration: 10000
-        })
+        displayLoading()
         let courseid = e.currentTarget.id
-        User.sharedInstance().getCourseContent(courseid, function(v){
-
-            // should be moved to where all the notifications are shown
-            // var notifications =  v.notifications.map(function (item, index, input){return item['id']})
-            // var assignments = v.notifications.map(function (item, index, input){return item['id']})
-            // initReadStatus(MsgType.NOTIFY, notifications)
-            // initReadStatus(MsgType.ASSIGNMENT, assignments)
-            // initArchive(MsgType.NOTIFY, notifications)
-            // initArchive(MsgType.ASSIGNMENT, assignments)     
-
-            data.assignment.content = v.assignments
-            data.notification.content = v.notifications
-
-            User.sharedInstance().getDiscussions(v.forumid, function(v2){
-                wx.hideToast()
-                data.discussion.content = v2
-
-                var refreshData = Object.assign({
-                    'notifications': v.notifications,
-                    'assignments': v.assignments,
-                    'discussions': v2
-                }, drawer.close())
-                resetBlocks(refreshData)
-                page.setData(refreshData)
-            })
-        })
-
+        refreshByCourse(courseid)
     },
     tapFileContent:function(e) {
         wx.navigateTo({
@@ -147,26 +123,71 @@ Page({
     tapHeader:function(e){
         if(!drawer.isOpen) {
             var name = e.currentTarget.id.split('-')[0]
-            this.setData(triggerAnimation(name))
+            triggerBlock(name)
         }
     },
     touchStart:drawer.touchStart,
     touchEnd:drawer.touchEnd
 })
 
-var triggerAnimation = function(name) {
+var displayLoading = function(){
+    wx.showToast({
+        title: '请稍等',
+        icon: 'loading',
+        duration: 10000
+    })
+}
+
+var triggerBlock = function(name) {
     var animationHeight = data[name].open ? itemHeight : (data[name].content.length + 1) * itemHeight
     var animationObj = {}
     animationObj[name + "Animation"] = blockAnimation.height(animationHeight).step().export()
     data[name].open = !data[name].open
-    return animationObj
+    page.setData(animationObj)
 }
 
-var resetBlocks = function(refreshData) {
+var resetBlocks = function() {
+    var refreshData = {}
     for (var d in data) {
         data[d].open = false
         var animationObj = {}
         animationObj[data[d].str + "Animation"] = blockAnimation.height(itemHeight).step().export()
         refreshData = Object.assign(refreshData, animationObj)
     }
+    return refreshData
+}
+
+var fetchAllData = function() {
+    User.sharedInstance().getBundle(function(v){
+        wx.hideToast()
+        console.log(v)
+        data.assignment.content = v.assignments
+        data.discussion.content = v.discussions
+        data.notification.content = v.notifications
+        page.setData(Object.assign({courses: v.courses}, data))
+    })
+}
+
+var refreshByCourse = function(courseid) {
+    User.sharedInstance().getCourseContent(courseid, function(v){
+
+        // should be moved to where all the notifications are shown
+        // var notifications =  v.notifications.map(function (item, index, input){return item['id']})
+        // var assignments = v.notifications.map(function (item, index, input){return item['id']})
+        // initReadStatus(MsgType.NOTIFY, notifications)
+        // initReadStatus(MsgType.ASSIGNMENT, assignments)
+        // initArchive(MsgType.NOTIFY, notifications)
+        // initArchive(MsgType.ASSIGNMENT, assignments)     
+
+        data.assignment.content = v.assignments
+        data.notification.content = v.notifications
+
+        User.sharedInstance().getDiscussions(v.forumid, function(v2){
+            wx.hideToast()
+            data.discussion.content = v2
+
+            var blockAnimations = resetBlocks()
+            page.setData(Object.assign(data, blockAnimations, drawer.close()))
+        })
+    })
 }
