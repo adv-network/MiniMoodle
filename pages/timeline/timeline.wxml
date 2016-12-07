@@ -4,10 +4,10 @@
         <view class="header-view" id="notification-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <text class="header">{{notification.description}}({{notification.badge}})</text>
         </view>
-        <view wx:for="{{notification.content}}" wx:key="timeline">
+        <view wx:for="{{notification.filteredContent}}" wx:key="timeline">
 
             <view id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text>{{item.name}}</text>
+                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.name}}</text>
             </view>
 
         </view>
@@ -17,10 +17,10 @@
         <view class="header-view" id="assignment-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <text class="header">{{assignment.description}}({{assignment.badge}})</text>
         </view>
-        <view wx:for="{{assignment.content}}" wx:key="timeline">
+        <view wx:for="{{assignment.filteredContent}}" wx:key="timeline">
 
             <view id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text>{{item.title}}</text>
+                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.title}}</text>
             </view>
 
         </view>
@@ -30,10 +30,10 @@
         <view class="header-view" id="discussion-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <text class="header">{{discussion.description}}({{discussion.badge}})</text>
         </view>
-        <view wx:for="{{discussion.content}}" wx:key="timeline">
+        <view wx:for="{{discussion.filteredContent}}" wx:key="timeline">
 
             <view id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text>{{item.subject}}</text>
+                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.subject}}</text>
             </view>
 
         </view>

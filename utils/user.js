@@ -36,6 +36,7 @@ export default class User {
         // console.log(username + "\t" + password)
         this.moodle = new Moodle(baseURL, username, password)
         this.moodle.getUserInfo(function(v){
+            console.log(v)
             let success = v.id != undefined
             if(success) {
                 wx.setStorageSync('userid', v.id)
