@@ -6,10 +6,29 @@ view.course{
     height: 50px;
 }
 
+view.header-view {
+    height: 50px;
+}
+
 text.header {
     color: blue;
 }
 
 view.item {
     height: 50px;
+}
+
+view#notification-view {
+    background-color: green;
+    overflow:hidden;
+}
+
+view#assignment-view {
+    background-color: yellow;
+    overflow:hidden;
+}
+
+view#discussion-view {
+    background-color: grey;
+    overflow:hidden;
 }
