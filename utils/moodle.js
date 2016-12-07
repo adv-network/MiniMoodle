@@ -3,12 +3,13 @@ import request from './requests'
 export default class Moodle {
 
   constructor(baseURL, username, password) {
+    this.getToken = getTokenWrapper()
     this.baseURL = baseURL
     this.username = username
     this.password = password
     this.token = null
-
     this.getToken(() => {})
+
   }
 
   getUserInfo(callback) {
@@ -111,7 +112,7 @@ export default class Moodle {
 }
 
 // thread unsafed
-Moodle.prototype.getToken = function() {
+function getTokenWrapper() {
   let callbacks = []
   let status = 'UNINITIALIZED'
   return function(callback) {
@@ -138,7 +139,7 @@ Moodle.prototype.getToken = function() {
       }
     })
   }
-}()
+}
 
 Moodle.DEFAULT_METHOD = 'POST'
 Moodle.DEFAULT_HEADER = { 'content-type': 'application/x-www-form-urlencoded' }
