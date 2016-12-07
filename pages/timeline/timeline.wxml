@@ -41,7 +41,7 @@
 </view>
 
 <!--menu-->
-<view id="left-menu" animation="{{animationData}}" style="width:{{menuWidth}}px; height:100%; position:fixed; top:0; left:{{menuLeft}}px;">
+<view id="left-menu" animation="{{animationData}}" style="width:{{menuWidth}}px;  position:absolute; top:0; left:{{menuLeft}}px;">
     <view class="course" id="course-title" bindtap="tapAllCourse">
         <text style="color:white">全部</text>
     </view>
