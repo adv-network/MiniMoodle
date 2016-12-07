@@ -71,9 +71,9 @@ export default class Moodle {
       success: data => {
         if ('exception' in data) data = { discussions: [] }
         callback(data.discussions.map(v => {
-          if (!(optionData instanceof Object)) optionData = {}
-          let discussion = optionData
-          return Object.assign(optionData, {
+          let defaultData = {}
+          if (optionData instanceof Object) Object.assign(defaultData, optionData)
+          return Object.assign(defaultData, {
             id: v.discussion,
             subject: v.subject,
             message: v.message,

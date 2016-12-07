@@ -160,7 +160,6 @@ var resetBlocks = function() {
 var fetchAllData = function() {
     User.sharedInstance().getBundle(function(v){
         wx.hideToast()
-        console.log(v)
         data.assignment.content = v.assignments
         data.discussion.content = v.discussions
         data.notification.content = v.notifications
