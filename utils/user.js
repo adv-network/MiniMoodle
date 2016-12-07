@@ -1,6 +1,8 @@
 import Moodle from './moodle'
 import Promise from './promise'
 
+import {resetMsgs} from './util.js'
+
 let baseURL = 'https://qcloud.robinhan.xyz'
 var sharedInstance = null
 
@@ -49,6 +51,7 @@ export default class User {
         wx.removeStorageSync('userid')
         wx.removeStorageSync('username')
         wx.removeStorageSync('password')
+        resetMsgs()
     }
 
     getCourses(callback) {

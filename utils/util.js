@@ -120,6 +120,13 @@ function initArchive(msgType, msgs){
   }
 }
 
+function resetMsgs(){
+  for (var key in MsgType){
+    wx.removeStorageSync(keyAssemble(MsgType[key],ReadMsgKey))
+    wx.removeStorageSync(keyAssemble(MsgType[key],ArchivedMsgKey))
+  }
+}
+
 
 
 module.exports = {
@@ -132,5 +139,6 @@ module.exports = {
   readMsg:readMsg,
   ifMsgRead:ifMsgRead,
   unreadMsg: unreadMsg,
-  unArchiveMsg: unArchiveMsg
+  unArchiveMsg: unArchiveMsg,
+  resetMsgs: resetMsgs
 }
