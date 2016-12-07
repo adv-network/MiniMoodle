@@ -20,7 +20,7 @@ if(typeof MsgType == "undefined"){
   var MsgType = {};
   MsgType.NOTIFY = 'notify';
   MsgType.ASSIGNMENT = 'assignment';
-  MsgType.DICUSS = 'discuss';
+  MsgType.DISCUSS = 'discuss';
 }
 
 var ReadMsgKey = 'readMsgs'
@@ -45,7 +45,7 @@ function initReadStatus(msgType, msgIds){
     var key = keyAssemble(msgType,ReadMsgKey)
     var readMsgs = wx.getStorageSync(key)
     if (!readMsgs.length) {  
-      wx.setStorageSync(key, msgIds)
+      wx.setStorageSync(key, Array.from(new Set(msgIds)))
     }
   } catch (e) {
     // Do something when catch error
@@ -77,7 +77,7 @@ function initArchive(msgIds){
     var key = keyAssemble(msgType,ArchivedMsgKey)
     var archivedMsgs = wx.getStorageSync(key)
     if (!archivedMsgs.length) {  // if the set is empty, then it should be initialized
-      wx.setStorageSync(key, msgIds)
+      wx.setStorageSync(key, Array.from(new Set(msgIds)))
     }
   } catch (e) {
     // Do something when catch error
