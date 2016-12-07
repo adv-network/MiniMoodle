@@ -1,8 +1,6 @@
 import request from './requests'
 
 export default class Moodle {
-  // const DEFAULT_METHOD = 'POST'
-  // const DEFAULT_HEADER = { 'content-type': 'application/x-www-form-urlencoded' }
 
   constructor(baseURL, username, password) {
     this.baseURL = baseURL
@@ -141,3 +139,6 @@ Moodle.prototype.getToken = function() {
     })
   }
 }()
+
+Moodle.DEFAULT_METHOD = 'POST'
+Moodle.DEFAULT_HEADER = { 'content-type': 'application/x-www-form-urlencoded' }
