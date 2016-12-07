@@ -1,6 +1,8 @@
 import User from '../../utils/user'
 import {Drawer} from '../../utils/drawer/drawer'
-import {initReadStatus, MsgType, readMsg, ifMsgRead} from '../../utils/util'
+import {initReadStatus, MsgType, readMsg, ifMsgRead, initArchive, archiveMsg, ifMsgArchived} from '../../utils/util'
+
+
 
 var menuWidth = 250
 var drawer = new Drawer(menuWidth, 1)
@@ -38,9 +40,13 @@ Page({
         User.sharedInstance().getCourseContent(courseid, function(v){
             wx.hideToast()
 
-            // should be moved to where all the notifications are shown 
-            initReadStatus(MsgType.NOTIFY, v.notifications.map(function (item, index, input){return item['id']}))
-            initReadStatus(MsgType.ASSIGNMENT, v.assignments.map(function (item, index, input){return item['id']}))        
+            // should be moved to where all the notifications are shown
+            // var notifications =  v.notifications.map(function (item, index, input){return item['id']})
+            // var assignments = v.notifications.map(function (item, index, input){return item['id']})
+            // initReadStatus(MsgType.NOTIFY, notifications)
+            // initReadStatus(MsgType.ASSIGNMENT, assignments)
+            // initArchive(MsgType.NOTIFY, notifications)
+            // initArchive(MsgType.ASSIGNMENT, assignments)     
 
             page.setData(Object.assign({
                 'notifications': v.notifications,
