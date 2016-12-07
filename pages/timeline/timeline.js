@@ -164,20 +164,24 @@ var fetchAllData = function() {
         data.assignment.content = v.assignments
         data.discussion.content = v.discussions
         data.notification.content = v.notifications
+
+        // init read status 
+        var notifications =  v.notifications.map(function (item, index, input){return item['id']})
+        var assignments = v.assignments.map(function (item, index, input){return item['id']})
+        var discussions = v.discussions.map(function (item, index, input){return item['id']})
+        initReadStatus(MsgType.NOTIFY, notifications)
+        initReadStatus(MsgType.ASSIGNMENT, assignments)
+        initReadStatus(MsgType.DISCUSS, discussions)
+        initArchive(MsgType.NOTIFY, notifications)
+        initArchive(MsgType.ASSIGNMENT, assignments)
+        initArchive(MsgType.DISCUSS, discussions)  
+
         page.setData(Object.assign({courses: v.courses}, data))
     })
 }
 
 var refreshByCourse = function(courseid) {
-    User.sharedInstance().getCourseContent(courseid, function(v){
-
-        // should be moved to where all the notifications are shown
-        // var notifications =  v.notifications.map(function (item, index, input){return item['id']})
-        // var assignments = v.notifications.map(function (item, index, input){return item['id']})
-        // initReadStatus(MsgType.NOTIFY, notifications)
-        // initReadStatus(MsgType.ASSIGNMENT, assignments)
-        // initArchive(MsgType.NOTIFY, notifications)
-        // initArchive(MsgType.ASSIGNMENT, assignments)     
+    User.sharedInstance().getCourseContent(courseid, function(v){   
 
         data.assignment.content = v.assignments
         data.notification.content = v.notifications
