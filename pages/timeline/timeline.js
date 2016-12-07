@@ -1,6 +1,6 @@
 import User from '../../utils/user'
 import {Drawer} from '../../utils/drawer/drawer'
-import {initReadStatus, MsgType, readMsg, ifMsgRead, initArchive, archiveMsg, ifMsgArchived} from '../../utils/util'
+import {initReadStatus, MsgType, readMsg, ifMsgRead, initArchive, archiveMsg, ifMsgArchived, unreadMsg, unArchiveMsg} from '../../utils/util'
 
 
 
@@ -166,15 +166,12 @@ var fetchAllData = function() {
         data.notification.content = v.notifications
 
         // init read status 
-        var notifications =  v.notifications.map(function (item, index, input){return item['id']})
-        var assignments = v.assignments.map(function (item, index, input){return item['id']})
-        var discussions = v.discussions.map(function (item, index, input){return item['id']})
-        initReadStatus(MsgType.NOTIFY, notifications)
-        initReadStatus(MsgType.ASSIGNMENT, assignments)
-        initReadStatus(MsgType.DISCUSS, discussions)
-        initArchive(MsgType.NOTIFY, notifications)
-        initArchive(MsgType.ASSIGNMENT, assignments)
-        initArchive(MsgType.DISCUSS, discussions)  
+        initReadStatus(MsgType.NOTIFY, v.notifications)
+        initReadStatus(MsgType.ASSIGNMENT, v.assignments)
+        initReadStatus(MsgType.DISCUSS, v.discussions)
+        initArchive(MsgType.NOTIFY, v.notifications)
+        initArchive(MsgType.ASSIGNMENT, v.assignments)
+        initArchive(MsgType.DISCUSS, v.discussions)  
 
         page.setData(Object.assign({courses: v.courses}, data))
     })
@@ -190,8 +187,8 @@ var refreshByCourse = function(courseid) {
             wx.hideToast()
             data.discussion.content = v2
 
-            var blockAnimations = resetBlocks()
             page.setData(Object.assign(data, blockAnimations, drawer.close()))
+            var blockAnimations = resetBlocks()
         })
     })
 }
