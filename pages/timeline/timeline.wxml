@@ -6,7 +6,7 @@
         </view>
         <view wx:for="{{notification.content}}" wx:key="timeline">
 
-            <view id='{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+            <view id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
                 <text>{{item.name}}</text>
             </view>
 
@@ -19,7 +19,7 @@
         </view>
         <view wx:for="{{assignment.content}}" wx:key="timeline">
 
-            <view id='{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+            <view id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
                 <text>{{item.title}}</text>
             </view>
 
@@ -32,7 +32,7 @@
         </view>
         <view wx:for="{{discussion.content}}" wx:key="timeline">
 
-            <view id='{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+            <view id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
                 <text>{{item.subject}}</text>
             </view>
 
