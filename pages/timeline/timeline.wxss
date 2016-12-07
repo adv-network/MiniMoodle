@@ -30,7 +30,7 @@ view#discussion-view {
 }
 
 .item {
-    padding: 5px;
+    padding: 0px 0px 0px 5px;
 }
 
 #left-menu button{
