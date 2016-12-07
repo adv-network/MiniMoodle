@@ -40,12 +40,29 @@ function readMsg(msgType, id){
   }
 }
 
-function initReadStatus(msgType, msgIds){
+function unreadMsg(msgType, id){
+  var key = keyAssemble(msgType, ReadMsgKey)
+  var readMsgs = new Set(wx.getStorageSync(key))
+  if(readMsgs.delete(id)){
+      wx.setStorageSync(key, Array.from(readMsgs))
+  }
+}
+
+function initReadStatus(msgType, msgs){
   try {
     var key = keyAssemble(msgType,ReadMsgKey)
-    var readMsgs = wx.getStorageSync(key)
-    if (!readMsgs.length) {  
-      wx.setStorageSync(key, Array.from(new Set(msgIds)))
+    if (!wx.getStorageSync(key).length) {  
+      if(msgType == MsgType.ASSIGNMENT){
+        var ids = msgs.map(function (item, index, input){
+          var now = new Date()
+          if(now>item['due']){
+            return item['id']
+          }
+        })
+      }else{
+        var ids = msgs.map(function (item, index, input){return item['id']})
+      }
+      wx.setStorageSync(key, Array.from(new Set(ids)))
     }
   } catch (e) {
     // Do something when catch error
@@ -71,18 +88,39 @@ function archiveMsg(msgType, id){
   }
 }
 
+function unArchiveMsg(msgType, id){
+  var key = keyAssemble(msgType, ArchivedMsgKey)
+  var archivedMsgs = new Set(wx.getStorageSync(key))
+  if(archivedMsgs.delete(id)){
+      wx.setStorageSync(key, Array.from(archivedMsgs))
+  }
+}
 
-function initArchive(msgIds){
+
+function initArchive(msgType, msgs){
   try {
     var key = keyAssemble(msgType,ArchivedMsgKey)
-    var archivedMsgs = wx.getStorageSync(key)
-    if (!archivedMsgs.length) {  // if the set is empty, then it should be initialized
-      wx.setStorageSync(key, Array.from(new Set(msgIds)))
+    if (!wx.getStorageSync(key).length) {  // if the set is empty, then it should be initialized
+      if(msgType == MsgType.ASSIGNMENT){
+        var now = new Date()
+        var ids = msgs.map(function (item, index, input){
+          if(now > item['due']){
+            return item['id']
+          }else{
+            return 
+          }
+        })
+      }else{
+        var ids = msgs.map(function (item, index, input){return item['id']})
+      }
+      wx.setStorageSync(key, Array.from(new Set(ids)))
     }
   } catch (e) {
     // Do something when catch error
   }
 }
+
+
 
 module.exports = {
   formatTime: formatTime,
@@ -92,5 +130,7 @@ module.exports = {
   archiveMsg:archiveMsg,
   ifMsgArchived:ifMsgArchived,
   readMsg:readMsg,
-  ifMsgRead:ifMsgRead
+  ifMsgRead:ifMsgRead,
+  unreadMsg: unreadMsg,
+  unArchiveMsg: unArchiveMsg
 }
