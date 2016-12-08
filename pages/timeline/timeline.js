@@ -99,8 +99,8 @@ Page({
         }
     },
     tapAllCourse:function(e) {
-        // displayLoading()
-        // fetchAllData()
+        displayLoading()
+        fetchAllData()
     },
     tapCourse:function(e) {
         displayLoading()
@@ -187,7 +187,11 @@ var makeBlocksFit = function() {
 var fetchAllData = function() {
     User.sharedInstance().getBundle(function(v){
         wx.hideToast()
-
+        console.log(v)
+        Global.courses = v.courses
+        Global.bundle.assignments = v.assignments
+        Global.bundle.discussions = v.discussions
+        Global.bundle.notifications = v.notifications
         timelineData.assignment.content = v.assignments
         timelineData.discussion.content = v.discussions
         timelineData.notification.content = v.notifications
@@ -200,25 +204,23 @@ var fetchAllData = function() {
         initArchive(MsgType.ASSIGNMENT, v.assignments)
         initArchive(MsgType.DISCUSS, v.discussions)  
 
+       
         filterData(true)
-        page.setData(Object.assign({courses: v.courses}, timelineData))
+        page.setData(Object.assign({courses: v.courses}, timelineData, drawer.close()))
     })
 }
 
 var refreshByCourse = function(courseid) {
-    User.sharedInstance().getCourseContent(courseid, function(v){   
-        timelineData.assignment.content = v.assignments
-        timelineData.notification.content = v.notifications
+    var bundle = Global.getBundleByCourse(courseid)
+    timelineData.assignment.content = bundle.assignments
+    timelineData.discussion.content = bundle.discussions
+    timelineData.notification.content = bundle.notifications
 
-        User.sharedInstance().getDiscussions(v.forumid, function(v2){
-            wx.hideToast()
-            timelineData.discussion.content = v2
+    var blockAnimations = resetBlocks()
+    filterData(false)
+    wx.hideToast()
+    page.setData(Object.assign(blockAnimations, timelineData, drawer.close()))
 
-            var blockAnimations = resetBlocks()
-            filterData(false)
-            page.setData(Object.assign(blockAnimations, timelineData, drawer.close()))
-        })
-    })
 }
 
 var filterData = function(updateArchives) {
@@ -234,7 +236,7 @@ var filterData = function(updateArchives) {
             var tmp = timelineData[k].content[i]
 
             if (ifMsgArchived(timelineData[k].msgType, tmp.id)) {
-                console.log('unarchive '+tmp.id)
+                // console.log('unarchive '+tmp.id)
                 if(updateArchives) {
                     Global.archives.push(tmp)
                 }
