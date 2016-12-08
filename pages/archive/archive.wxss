@@ -1,0 +1,7 @@
+.header-view {
+    padding: 5px
+}
+
+.item {
+    padding: 0px 0px 0px 5px;
+}

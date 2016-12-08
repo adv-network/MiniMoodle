@@ -1,0 +1,14 @@
+<view id="archive-view" style="height:{{blockHeight}}px;">
+    <view class="header-view" id="archive-header-view" style="height:{{itemHeight}}px;">
+        <text class="header">{{description}}({{badge}})</text>
+    </view>
+    <view wx:for="{{data}}">
+
+        <view id='archive-{{item.id}}' class="item" style="height:{{itemHeight}}px;">
+            <text wx:if="{{item.title!=''}}">{{item.title}}</text>
+            <text wx:if="{{item.subject!=''}}">{{item.subject}}</text>
+            <text wx:if="{{item.name!=''}}">{{item.name}}</text>
+        </view>
+
+    </view>
+</view>
