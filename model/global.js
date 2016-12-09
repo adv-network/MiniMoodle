@@ -19,3 +19,11 @@ Global.getBundleByCourse = function(courseid) {
     }
     return result
 }
+
+Global.getCourseByID = function(courseid) {
+    for (var i = 0; i < Global.courses.length; i++) {
+        if(Global.courses[i].id == courseid) {
+            return Global.courses[i]
+        }
+    }
+}
