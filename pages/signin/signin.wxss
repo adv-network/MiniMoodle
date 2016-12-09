@@ -1,5 +1,5 @@
 #hint-text{
-    color: red;
+    color: #CC3333;
     bottom: 100px;
 }
 
@@ -9,4 +9,8 @@
     left: 10%;
     width: 80%;
     margin: 10px 0px 10px;
+}
+
+.section input {
+    border-bottom: 1px solid #99CCCC;    
 }

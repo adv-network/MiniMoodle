@@ -1,5 +1,5 @@
 view#left-menu{
-    background-color: black;
+    background-color: #0099CC;
 }
 
 view.course{
@@ -7,30 +7,35 @@ view.course{
 }
 
 text.header {
-    color: blue;
+    color: #3399CC;
 }
 
 view#notification-view {
-    background-color: green;
+    background-color: #CCFFCC;
     overflow:hidden;
 }
 
 view#assignment-view {
-    background-color: yellow;
+    background-color: #99CCCC;
     overflow:hidden;
 }
 
 view#discussion-view {
-    background-color: grey;
+    background-color: #FFFFCC;
     overflow:hidden;
 }
 
 .overview-header {
-    padding: 5px;
+    padding: 10px;
+    text-align: center;
 }
 
 .item {
     padding: 0px 0px 0px 5px;
+}
+
+.item text {
+    color: #0099CC;
 }
 
 #left-menu button{
