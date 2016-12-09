@@ -11,17 +11,17 @@ text.header {
 }
 
 view#notification-view {
-    background-color: #CCFFCC;
+    background-color: #FFFFCC;
     overflow:hidden;
 }
 
 view#assignment-view {
-    background-color: #99CCCC;
+    background-color: #CCFFFF;
     overflow:hidden;
 }
 
 view#discussion-view {
-    background-color: #FFFFCC;
+    background-color: #FFCCCC;
     overflow:hidden;
 }
 
