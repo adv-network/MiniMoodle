@@ -7,7 +7,7 @@
         <view class="header-view" id="notification-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <text class="header">{{notification.description}}({{notification.badge}})</text>
         </view>
-        <view wx:for="{{notification.filteredContent}}" wx:key="timeline">
+        <view  class="notifyContent" wx:for="{{notification.filteredContent}}" wx:key="timeline">
 
             <view id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
                 <text wx:if="{{!item.read}}">(未读)</text><text>{{item.name}}</text>
@@ -20,7 +20,7 @@
         <view class="header-view" id="assignment-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <text class="header">{{assignment.description}}({{assignment.badge}})</text>
         </view>
-        <view wx:for="{{assignment.filteredContent}}" wx:key="timeline">
+        <view class='assignmentContent' wx:for="{{assignment.filteredContent}}" wx:key="timeline">
 
             <view id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
                 <text wx:if="{{!item.read}}">(未读)</text><text>{{item.title}}</text>
@@ -33,7 +33,7 @@
         <view class="header-view" id="discussion-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <text class="header">{{discussion.description}}({{discussion.badge}})</text>
         </view>
-        <view wx:for="{{discussion.filteredContent}}" wx:key="timeline">
+        <view class='discussionContent' wx:for="{{discussion.filteredContent}}" wx:key="timeline">
 
             <view id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
                 <text wx:if="{{!item.read}}">(未读)</text><text>{{item.subject}}</text>
@@ -50,9 +50,9 @@
     </view>
     <view wx:for="{{courses}}" wx:key="course">
         <view class="course" id="{{item.id}}" bindtap="tapCourse">
-            <text style="color:white">{{item.name}}</text>
+            <text style="color:white;padding:10px">{{item.name}}</text>
         </view>
     </view>
     <button type="default" bindtap="tapFileContent">归档内容</button>
-    <button type="warn" bindtap="tapLogout">解除绑定</button>
+    <button type="warn" style='background:#666666' bindtap="tapLogout">解除绑定</button>
 </view>
