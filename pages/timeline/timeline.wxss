@@ -1,5 +1,5 @@
 view#left-menu{
-    background-color: #0099CC;
+    background-color: #FF9999;
 }
 
 view.course{
@@ -11,17 +11,17 @@ text.header {
 }
 
 view#notification-view {
-    background-color: #CCFFCC;
+    background-color: #FFFFCC;
     overflow:hidden;
 }
 
 view#assignment-view {
-    background-color: #99CCCC;
+    background-color: #CCFFFF;
     overflow:hidden;
 }
 
 view#discussion-view {
-    background-color: #FFFFCC;
+    background-color: #FFCCCC;
     overflow:hidden;
 }
 
@@ -39,8 +39,8 @@ view#discussion-view {
 }
 
 #left-menu button{
-    width: 90%;
-    margin: 5px 5px 0px 5px;
+    width: 100%;
+    margin: auto;
 }
 
 .course {
@@ -48,5 +48,24 @@ view#discussion-view {
 }
 
 #course-title{
-    padding: 5px 0px 0px 5px;
+    height: 40px;
+    padding-top: 10px ;
+    padding-left:15px;
+    background-color: #CC6666;
+    /*text-align:center;*/
+}
+
+.assignmentContent{
+       background-color: #FFFFFF;
+
+}
+
+.notifyContent{
+       background-color: #FFFFFF;
+
+}
+
+.discussionContent{
+       background-color: #FFFFFF;
+
 }
