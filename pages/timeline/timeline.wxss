@@ -36,7 +36,7 @@ view#discussion-view {
 .overview-header {
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #666666;
 }
 
 .item {
@@ -65,13 +65,22 @@ view#discussion-view {
 }
 
 .assignmentContent{
-       background-color: #FFFFFF;
+    padding-left:5%;
 }
 
 .notifyContent{
-       background-color: #FFFFFF;
+     padding-left:5%;
 }
 
 .discussionContent{
-       background-color: #FFFFFF;
+     padding-left:5%;
+}
+
+text.toread{
+    color:#336699;
+
+}
+
+text.read{
+    color:#999999;
 }

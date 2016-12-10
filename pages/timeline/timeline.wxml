@@ -5,12 +5,15 @@
 
     <view id="notification-view" class="overview" animation="{{notificationAnimation}}" style="height:{{blockHeight}}px;">
         <view class="header-view" id="notification-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
-            <text class="header">{{notification.description}}({{notification.badge}})</text>
+            <icon type="info_circle" size="15" color="#336666"/><text class="header">{{notification.description}}</text><text class="header" wx:if="{{notification.badge}}">({{notification.badge}})</text>
         </view>
         <view  class="notifyContent" wx:for="{{notification.filteredContent}}" wx:key="timeline">
 
-            <view id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.name}}</text>
+            <view wx:if="{{!item.read}}" id='notify-{{item.id}}' class='item' bindtap='tapTimeline' style='height:{{itemHeight}}px;'>
+                <text class='toread'>{{item.title}}</text>
+            </view>
+             <view wx:else id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+                <text class='read'>{{item.title}}</text>
             </view>
 
         </view>
@@ -18,12 +21,15 @@
 
     <view id="assignment-view" class="overview" animation="{{assignmentAnimation}}" style="height:{{blockHeight}}px;">
         <view class="header-view" id="assignment-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
-            <text class="header">{{assignment.description}}({{assignment.badge}})</text>
+             <icon type="waiting_circle" size="15" color="#336666"/><text class="header">{{assignment.description}}</text><text class="header" wx:if="{{assignment.badge}}">({{assignment.badge}})</text>
         </view>
         <view class='assignmentContent' wx:for="{{assignment.filteredContent}}" wx:key="timeline">
 
-            <view id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.title}}</text>
+            <view wx:if="{{!item.read}}" id='assignment-{{item.id}}' class='item' bindtap='tapTimeline' style='height:{{itemHeight}}px;'>
+                <text class='toread'>{{item.title}}</text>
+            </view>
+             <view wx:else id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+                <text class='read'>{{item.title}}</text>
             </view>
 
         </view>
@@ -31,13 +37,17 @@
 
     <view id="discussion-view" class="overview" animation="{{discussionAnimation}}" style="height:{{blockHeight}}px;">
         <view class="header-view" id="discussion-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
-            <text class="header">{{discussion.description}}({{discussion.badge}})</text>
+             <icon type="success_circle" size="15" color="#336666"/><text class="header">{{discussion.description}}</text><text class="header" wx:if="{{discussion.badge}}">({{discussion.badge}})</text>
         </view>
         <view class='discussionContent' wx:for="{{discussion.filteredContent}}" wx:key="timeline">
 
-            <view id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.subject}}</text>
+            <view wx:if="{{!item.read}}" id='discuss-{{item.id}}' class='item' bindtap='tapTimeline' style='height:{{itemHeight}}px;'>
+                <text class='toread'>{{item.title}}</text>
             </view>
+             <view wx:else id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
+                <text class='read'>{{item.title}}</text>
+            </view>
+
 
         </view>
     </view>
