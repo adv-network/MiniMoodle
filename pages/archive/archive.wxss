@@ -16,5 +16,10 @@ text.header {
 }
 
 .item text {
-    color: #6699CC;
+    color: #999999;
+}
+
+.courseName {
+    padding-left: 10px;
+    color: #003366 !important;
 }

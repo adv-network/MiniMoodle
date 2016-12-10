@@ -10,10 +10,10 @@
         <view  class="notifyContent" wx:for="{{notification.filteredContent}}" wx:key="timeline">
 
             <view wx:if="{{!item.read}}" id='notify-{{item.id}}' class='item' bindtap='tapTimeline' style='height:{{itemHeight}}px;'>
-                <text class='toread'>{{item.title}}</text><text>{{item.courseName}}</text>
+                <text class='toread'>{{item.title}}</text><text class="courseName">{{item.courseName}}</text>
             </view>
              <view wx:else id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text class='read'>{{item.title}}</text><text>{{item.courseName}}</text>
+                <text class='read'>{{item.title}}</text><text class="courseName">{{item.courseName}}</text>
             </view>
 
         </view>
@@ -26,10 +26,10 @@
         <view class='assignmentContent' wx:for="{{assignment.filteredContent}}" wx:key="timeline">
 
             <view wx:if="{{!item.read}}" id='assignment-{{item.id}}' class='item' bindtap='tapTimeline' style='height:{{itemHeight}}px;'>
-                <text class='toread'>{{item.title}}</text><text>{{item.courseName}}</text>
+                <text class='toread'>{{item.title}}</text><text class="courseName">{{item.courseName}}</text>
             </view>
              <view wx:else id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text class='read'>{{item.title}}</text><text>{{item.courseName}}</text>
+                <text class='read'>{{item.title}}</text><text class="courseName">{{item.courseName}}</text>
             </view>
 
         </view>
@@ -42,10 +42,10 @@
         <view class='discussionContent' wx:for="{{discussion.filteredContent}}" wx:key="timeline">
 
             <view wx:if="{{!item.read}}" id='discuss-{{item.id}}' class='item' bindtap='tapTimeline' style='height:{{itemHeight}}px;'>
-                <text class='toread'>{{item.title}}</text><text>{{item.courseName}}</text>
+                <text class='toread'>{{item.title}}</text><text class="courseName">{{item.courseName}}</text>
             </view>
              <view wx:else id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text class='read'>{{item.title}}</text><text>{{item.courseName}}</text>
+                <text class='read'>{{item.title}}</text><text class="courseName">{{item.courseName}}</text>
             </view>
 
 
