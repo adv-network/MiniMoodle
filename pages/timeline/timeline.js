@@ -251,7 +251,9 @@ var filterData = function(updateArchives) {
             var tmp = timelineData[k].content[i]
             if (updateArchives) {
                 var course = Global.getCourseByID(tmp.courseid)
-                tmp.courseName = course.name
+                if (course != undefined) {
+                    tmp.courseName = course.name
+                }
             }
 
             if (ifMsgArchived(timelineData[k].msgType, tmp.id)) {
