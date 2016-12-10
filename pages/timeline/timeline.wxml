@@ -46,13 +46,13 @@
 <!--menu-->
 <view id="left-menu" animation="{{animationData}}" style="width:{{menuWidth}}px;  position:absolute; top:0; left:{{menuLeft}}px;">
     <view class="course" id="course-title" bindtap="tapAllCourse">
-        <text style="color:white">全部</text>
+        <text>全部</text>
     </view>
     <view wx:for="{{courses}}" wx:key="course">
         <view class="course" id="{{item.id}}" bindtap="tapCourse">
-            <text style="color:white;padding:10px">{{item.name}}</text>
+            <text>{{item.name}}</text>
         </view>
     </view>
     <button type="default" bindtap="tapFileContent">归档内容</button>
-    <button type="warn" style='background:#666666' bindtap="tapLogout">解除绑定</button>
+    <button type="warn" style='margin-top: 10px; background:#666666' bindtap="tapLogout">解除绑定</button>
 </view>

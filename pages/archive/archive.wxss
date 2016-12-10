@@ -1,11 +1,20 @@
 .header-view {
-    padding: 5px;
+    padding-top: 20px;
+    border-bottom: 1px solid #CCCCCC;
+    text-align: center;
+}
+
+text.header {
+    color: #666666;
+    font-weight:bold;
 }
 
 .item {
-    padding: 0px 0px 0px 5px;
+    padding-top: 20px;
+    padding-left: 15px;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .item text {
-    background-color: #E8E8E8;
+    color: #6699CC;
 }
