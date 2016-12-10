@@ -249,6 +249,10 @@ var filterData = function(updateArchives) {
 
         for (var i = 0; i < timelineData[k].content.length; i++) {
             var tmp = timelineData[k].content[i]
+            if (updateArchives) {
+                var course = Global.getCourseByID(tmp.courseid)
+                tmp.courseName = course.name
+            }
 
             if (ifMsgArchived(timelineData[k].msgType, tmp.id)) {
                 // console.log('unarchive '+tmp.id)

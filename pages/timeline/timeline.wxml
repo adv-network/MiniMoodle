@@ -10,7 +10,7 @@
         <view  class="notifyContent" wx:for="{{notification.filteredContent}}" wx:key="timeline">
 
             <view id='notify-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.name}}</text>
+                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.name}}</text><text>{{item.courseName}}</text>
             </view>
 
         </view>
@@ -23,7 +23,7 @@
         <view class='assignmentContent' wx:for="{{assignment.filteredContent}}" wx:key="timeline">
 
             <view id='assignment-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.title}}</text>
+                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.title}}</text><text>{{item.courseName}}</text>
             </view>
 
         </view>
@@ -36,7 +36,7 @@
         <view class='discussionContent' wx:for="{{discussion.filteredContent}}" wx:key="timeline">
 
             <view id='discuss-{{item.id}}' class="item" bindtap='tapTimeline' style="height:{{itemHeight}}px;">
-                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.subject}}</text>
+                <text wx:if="{{!item.read}}">(未读)</text><text>{{item.subject}}</text><text>{{item.courseName}}</text>
             </view>
 
         </view>
