@@ -1,6 +1,6 @@
 <view bindtouchstart="touchStart" bindtouchend="touchEnd" style="width:100%; min-height:600px;">
-    <view>
-        <text>{{title}}</text>
+    <view class="overview-header">
+        <text class='title'>{{title}}</text>
     </view>
 
     <view id="notification-view" class="overview" animation="{{notificationAnimation}}" style="height:{{blockHeight}}px;">

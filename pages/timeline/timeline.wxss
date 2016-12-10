@@ -7,27 +7,36 @@ view.course{
 }
 
 text.header {
-    color: #3399CC;
+    color: #336666;
+}
+
+text.title {
+    color: #666666;
+    font-weight:bold;
 }
 
 view#notification-view {
-    background-color: #FFFFCC;
+    /*background-color: #FFFFCC;*/
     overflow:hidden;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 view#assignment-view {
-    background-color: #CCFFFF;
+    /*background-color: #CCFFFF;*/
     overflow:hidden;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 view#discussion-view {
-    background-color: #FFCCCC;
+    /*background-color: #FFCCCC;*/
     overflow:hidden;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .overview-header {
     padding: 10px;
     text-align: center;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .item {
@@ -35,7 +44,7 @@ view#discussion-view {
 }
 
 .item text {
-    color: #0099CC;
+    color: #6699CC;
 }
 
 #left-menu button{
@@ -57,15 +66,12 @@ view#discussion-view {
 
 .assignmentContent{
        background-color: #FFFFFF;
-
 }
 
 .notifyContent{
        background-color: #FFFFFF;
-
 }
 
 .discussionContent{
        background-color: #FFFFFF;
-
 }
