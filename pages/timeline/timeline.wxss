@@ -42,6 +42,8 @@ view#discussion-view {
 
 .item {
     padding: 0px 0px 0px 5px;
+    /*border-bottom: 1px solid #CCCCCC;*/
+
 }
 
 .item text {
@@ -84,4 +86,18 @@ text.toread{
 
 text.read{
     color:#999999;
+}
+
+.header-view {
+    text-align: center;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.header-view text{
+    position: relative;
+    top:10px;
+}
+.header-view icon{
+    position: relative;
+    top:10px;
 }

@@ -4,7 +4,7 @@
     </view>
 
     <view id="notification-view" class="overview" animation="{{notificationAnimation}}" style="height:{{blockHeight}}px;">
-        <view class="header-view" id="notification-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
+        <view class="header-view" id="notification-header-view"  bindtap="tapHeader" style="height:{{itemHeight}}px;">
             <icon type="info_circle" size="15" color="#336666"/><text class="header">{{notification.description}}</text><text class="header" wx:if="{{notification.badge}}">({{notification.badge}})</text>
         </view>
         <view  class="notifyContent" wx:for="{{notification.filteredContent}}" wx:key="timeline">
@@ -20,7 +20,7 @@
     </view>
 
     <view id="assignment-view" class="overview" animation="{{assignmentAnimation}}" style="height:{{blockHeight}}px;">
-        <view class="header-view" id="assignment-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
+        <view class="header-view" id="assignment-header-view"  bindtap="tapHeader" style="height:{{itemHeight}}px;">
              <icon type="waiting_circle" size="15" color="#336666"/><text class="header">{{assignment.description}}</text><text class="header" wx:if="{{assignment.badge}}">({{assignment.badge}})</text>
         </view>
         <view class='assignmentContent' wx:for="{{assignment.filteredContent}}" wx:key="timeline">
@@ -36,7 +36,7 @@
     </view>
 
     <view id="discussion-view" class="overview" animation="{{discussionAnimation}}" style="height:{{blockHeight}}px;">
-        <view class="header-view" id="discussion-header-view" class="overview-header" bindtap="tapHeader" style="height:{{itemHeight}}px;">
+        <view class="header-view" id="discussion-header-view" bindtap="tapHeader" style="height:{{itemHeight}}px;">
              <icon type="success_circle" size="15" color="#336666"/><text class="header">{{discussion.description}}</text><text class="header" wx:if="{{discussion.badge}}">({{discussion.badge}})</text>
         </view>
         <view class='discussionContent' wx:for="{{discussion.filteredContent}}" wx:key="timeline">
