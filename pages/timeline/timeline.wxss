@@ -1,9 +1,10 @@
 view#left-menu{
-    background-color: #FF9999;
+    background-color: #DDDDDD;
 }
 
-view.course{
-    height: 50px;
+view.course {
+    height: 50;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 text.header {
@@ -53,14 +54,14 @@ view#discussion-view {
 }
 
 .course {
-    padding: 0px 0px 0px 5px;
-}
-
-#course-title{
     height: 40px;
     padding-top: 10px ;
     padding-left:15px;
-    background-color: #CC6666;
+}
+
+#course-title text{
+    color: #666666;
+    font-weight:bold;
     /*text-align:center;*/
 }
 
