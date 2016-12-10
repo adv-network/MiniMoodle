@@ -37,11 +37,13 @@ view#discussion-view {
 .overview-header {
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #666666;
 }
 
 .item {
     padding: 0px 0px 0px 5px;
+    /*border-bottom: 1px solid #CCCCCC;*/
+
 }
 
 .item text {
@@ -66,13 +68,36 @@ view#discussion-view {
 }
 
 .assignmentContent{
-       background-color: #FFFFFF;
+    padding-left:5%;
 }
 
 .notifyContent{
-       background-color: #FFFFFF;
+     padding-left:5%;
 }
 
 .discussionContent{
-       background-color: #FFFFFF;
+     padding-left:5%;
+}
+
+text.toread{
+    color:#336699;
+
+}
+
+text.read{
+    color:#999999;
+}
+
+.header-view {
+    text-align: center;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.header-view text{
+    position: relative;
+    top:10px;
+}
+.header-view icon{
+    position: relative;
+    top:10px;
 }
