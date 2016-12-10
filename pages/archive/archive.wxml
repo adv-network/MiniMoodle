@@ -4,7 +4,7 @@
     </view>
     <view wx:for="{{data}}">
 
-        <view id='archive-{{item.id}}' class="item" style="height:{{itemHeight}}px;">
+        <view id='{{item.msgType}}-{{item.id}}' class="item" style="height:{{itemHeight}}px;" bindtap='tapTimeline'>
             <text wx:if="{{item.title!=''}}">{{item.title}}</text>
             <text wx:if="{{item.subject!=''}}">{{item.subject}}</text>
             <text wx:if="{{item.name!=''}}">{{item.name}}</text>

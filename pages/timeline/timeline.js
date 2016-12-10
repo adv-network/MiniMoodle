@@ -39,7 +39,9 @@ let itemHeight = 50
 var drawer = new Drawer(menuWidth, 1)
 var page = null
 
-var itemMenuActionSheet = function(msgType, id) {
+var itemMenuActionSheet = function(item) {
+    var msgType = item.msgType
+    var id = item.id
     var read = ifMsgRead(msgType, id)
     var archived = ifMsgArchived(msgType, id)
     var readAction = read ? unreadMsg : readMsg
@@ -55,6 +57,7 @@ var itemMenuActionSheet = function(msgType, id) {
                 } else if(res.tapIndex == 1) {
                     // 归档
                     archiveAction(msgType, id)
+                    Global.archives.push(item)
                 }
                 filterData(false)
                 // console.log(timelineData)
@@ -95,7 +98,19 @@ Page({
         if(!drawer.isOpen) {
             // console.log(e.currentTarget.id)
             var idSplit = e.currentTarget.id.split('-')
-            wx.showActionSheet(itemMenuActionSheet(idSplit[0], Number(idSplit[1])))
+            var item = null
+            for(var k in timelineData) {
+                if (timelineData[k].msgType == idSplit[0]){
+                    for (var i = 0; i < timelineData[k].filteredContent.length; i++){
+                        if(timelineData[k].filteredContent[i].id == Number(idSplit[1])) {
+                            item = timelineData[k].filteredContent[i]
+                            item.msgType = idSplit[0]
+                            break
+                        }
+                    }
+                }
+            }
+            wx.showActionSheet(itemMenuActionSheet(item))
         }
     },
     tapAllCourse:function(e) {
@@ -206,7 +221,7 @@ var fetchAllData = function() {
 
        
         filterData(true)
-        page.setData(Object.assign({courses: v.courses}, timelineData, drawer.close()))
+        page.setData(Object.assign({courses: v.courses, title:'全部'}, timelineData, drawer.close(), resetBlocks()))
     })
 }
 
@@ -219,7 +234,7 @@ var refreshByCourse = function(courseid) {
     var blockAnimations = resetBlocks()
     filterData(false)
     wx.hideToast()
-    page.setData(Object.assign(blockAnimations, timelineData, drawer.close()))
+    page.setData(Object.assign(blockAnimations, timelineData, drawer.close(), {title: Global.getCourseByID(courseid).name}))
 
 }
 
@@ -238,6 +253,7 @@ var filterData = function(updateArchives) {
             if (ifMsgArchived(timelineData[k].msgType, tmp.id)) {
                 // console.log('unarchive '+tmp.id)
                 if(updateArchives) {
+                    tmp.msgType = timelineData[k].msgType
                     Global.archives.push(tmp)
                 }
 
