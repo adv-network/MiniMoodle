@@ -1,5 +1,9 @@
 view#left-menu{
+<<<<<<< HEAD
     background-color: #0099CC;
+=======
+    background-color: #FF9999;
+>>>>>>> master
 }
 
 view.course{
@@ -7,27 +11,55 @@ view.course{
 }
 
 text.header {
+<<<<<<< HEAD
     color: #3399CC;
 }
 
 view#notification-view {
     background-color: #FFFFCC;
+=======
+    color: #336666;
+}
+
+text.title {
+    color: #666666;
+    font-weight:bold;
+}
+
+view#notification-view {
+    /*background-color: #FFFFCC;*/
+>>>>>>> master
     overflow:hidden;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 view#assignment-view {
+<<<<<<< HEAD
     background-color: #CCFFFF;
+=======
+    /*background-color: #CCFFFF;*/
+>>>>>>> master
     overflow:hidden;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 view#discussion-view {
+<<<<<<< HEAD
     background-color: #FFCCCC;
+=======
+    /*background-color: #FFCCCC;*/
+>>>>>>> master
     overflow:hidden;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .overview-header {
     padding: 10px;
     text-align: center;
+<<<<<<< HEAD
+=======
+    border-bottom: 1px solid #CCCCCC;
+>>>>>>> master
 }
 
 .item {
@@ -35,12 +67,16 @@ view#discussion-view {
 }
 
 .item text {
+<<<<<<< HEAD
     color: #0099CC;
+=======
+    color: #6699CC;
+>>>>>>> master
 }
 
 #left-menu button{
-    width: 90%;
-    margin: 5px 5px 0px 5px;
+    width: 100%;
+    margin: auto;
 }
 
 .course {
@@ -48,5 +84,21 @@ view#discussion-view {
 }
 
 #course-title{
-    padding: 5px 0px 0px 5px;
+    height: 40px;
+    padding-top: 10px ;
+    padding-left:15px;
+    background-color: #CC6666;
+    /*text-align:center;*/
+}
+
+.assignmentContent{
+       background-color: #FFFFFF;
+}
+
+.notifyContent{
+       background-color: #FFFFFF;
+}
+
+.discussionContent{
+       background-color: #FFFFFF;
 }
