@@ -69,17 +69,14 @@ view#discussion-view {
 
 .assignmentContent{
     padding-left:5%;
-    padding-top: 10px;
 }
 
 .notifyContent{
      padding-left:5%;
-     padding-top: 10px;
 }
 
 .discussionContent{
      padding-left:5%;
-     padding-top: 10px;
 }
 
 text.toread{
